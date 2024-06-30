@@ -3,189 +3,174 @@ import java.util.Scanner;
 
 public class LuckyDice {
 
-	// scanner
-	static Scanner scan = new Scanner(System.in);
+    // scanner
+    static Scanner scan = new Scanner(System.in);
 
-	// random
-	static Random random = new Random();
+    // random
+    static Random random = new Random();
 
-	// static declarations
-	static String playerName;
-	static int userScore = 0;
-	static int cpuScore = 0;
-	static int matchPoint = 0;
+    // static declarations
+    static String playerName;
+    static int playerScore = 0;
+    static int cpuScore = 0;
+    static int matchPoint = 0;
 
-	// game intro
-	static void gameIntro() {
-		System.out.println("--------========--------");
-		System.out.println("|  /=/ Lucky Dice /=/  |");
-		System.out.println("--------========--------");
+    // game intro
+    static void gameIntro() {
+        System.out.println("--------========--------");
+        System.out.println("|  /=/ Lucky Dice /=/  |");
+        System.out.println("--------========--------");
 
-		//rules
-		System.out.println("Rules: Pick a match point and roll the dice against "
-				+ "\nthe computer to see who gets the first 3 matches.\n");
-		System.out.println("Numbers are between 2 & 12. First player "
-				+ "\nto match 3 times wins the game. Good luck!");
-	}
+        // rules
+        System.out.println("Rules: Pick a match point and roll the dice against "
+                + "\nthe computer to see who gets the first 3 matches.\n");
+        System.out.println("Numbers are between 2 & 12. First player "
+                + "\nto match 3 times wins the game. Good luck!");
+    }
 
-	// player menu
-	static void gameMenu() {
-		System.out.println("// Game Play Menu //");
-		System.out.println("// press 1 // Get match point");
-		System.out.println("// press 2 // Roll dice");
-		System.out.println("// press 3 // Quit Game");
-	}
+    // let's play message
+    static void letsPlayTxt() {
+        System.out.println("\n// Let's play! //");
+        System.out.println("\nFirst Step // Get a match point.\n");
+    }
 
-	// keep rolling message
-	static void keepRolling() {
-		System.out.println("\nPress '2' to roll dice...");
-	}
+    // player menu
+    static void gameMenu() {
+        System.out.println("// Game Play Menu //");
+        System.out.println("// press 1 // Get match point");
+        System.out.println("// press 2 // Roll dice");
+        System.out.println("// press 3 // Quit Game");
+    }
 
-	static void matchPoint() {
-		matchPoint = random.nextInt(2,12)+1;
-		System.out.println("Match point: //" + matchPoint + "//");
-	}
+    // keep rolling message
+    static void keepRolling() {
+        System.out.println("\nPress '2' to roll dice... '3' to quit.");
+    }
 
-	static void scoreboard() {
-		System.out.println(":: Scoreboard ::");
-		System.out.println(playerName + ": " + userScore + " | Cpu: " + cpuScore);
-		space();
-	}
+    // get match point
+    static void getMatchPoint() {
+        matchPoint = random.nextInt(11) + 2; // Random number between 2 and 12
+        System.out.println("\nMatch point: //" + matchPoint + "//");
+    }
 
-	static void playerWins() {
-		userScore++;
-		System.out.println(playerName + " wins!");
-	}
+    // scoreboard
+    static void scoreboard() {
+        System.out.println(":: Scoreboard ::");
+        System.out.println(playerName + ": " + playerScore + " | Cpu: " + cpuScore);
+        space();
+    }
 
-	static void cpuWins() {
-		cpuScore++;
-		System.out.println("Cpu wins!");
-	}
+    // player wins
+    static void playerWins() {
+        playerScore++;
+        System.out.println(playerName + " wins!");
+    }
 
-	static void tieWin() {
-		userScore++;
-		cpuScore++;
-		System.out.println("It's a tie!");
-	}
+    // cpu wins
+    static void cpuWins() {
+        cpuScore++;
+        System.out.println("Cpu wins!");
+    }
 
-	static void noWinner() {
-		System.out.println("No winner yet... roll again!");
-	}
+    // tie win
+    static void tieWin() {
+        playerScore++;
+        cpuScore++;
+        System.out.println("It's a tie!");
+    }
 
-	static void quitGame() {
-		System.out.println("You've exited the game... goodbye!");
-	}
+    // no winner
+    static void noWinner() {
+        System.out.println("No winner yet... roll again!");
+    }
 
-	static void rollAgain() {
-		System.out.println("\nDo you want to roll again? Y/N ");
-	}
+    // quit game
+    static void quitGame() {
+        System.out.println("You've exited the game... goodbye!");
+    }
 
-	static void space() {
-		System.out.println();
-	}
+    // roll again
+    static void rollAgain() {
+        System.out.println("\nDo you want to roll again? Y/N ");
+    }
 
-	// main
-	public static void main(String[] args) {
+    // space
+    static void space() {
+        System.out.println();
+    }
 
-		// declarations
-		int userInput = 0;
-		int diceOne = 0;
-		int diceTwo = 0;
-		int cpuDiceOne = 0;
-		int cpuDiceTwo = 0;
-		int gameScore = 0;
-		int mySum = 0;
-		int cpuSum = 0;
-		int num1 = 0;
-		int num2 = 0;
-		int matchPoint = 0;
-		boolean rollAgain = false;
+    // random pick
+    static int[] randomPick() {
+        int diceOne = random.nextInt(6) + 1;
+        int diceTwo = random.nextInt(6) + 1;
+        int mySum = diceOne + diceTwo;
 
-		// intro
-		gameIntro();
+        int cpuDiceOne = random.nextInt(6) + 1;
+        int cpuDiceTwo = random.nextInt(6) + 1;
+        int cpuSum = cpuDiceOne + cpuDiceTwo;
 
-		System.out.print("\nEnter player name: ");
-		playerName = scan.next();
+        return new int[]{mySum, cpuSum};
+    }
 
-		System.out.println("\n// Let's play! //");
-		System.out.println("\nFirst Step // Get a match point.\n");
-		scoreboard();
+    // main
+    public static void main(String[] args) {
 
-		// gameplay menu
-		gameMenu();
+        // intro
+        gameIntro();
 
-		userInput = scan.nextInt();
+        System.out.print("\nEnter player name: ");
+        playerName = scan.next();
 
-		while (userInput != 3) {
+        letsPlayTxt();
+        scoreboard();
 
-			num1 = random.nextInt(6)+1;
-			num2 = random.nextInt(6)+1;
+        boolean gameRunning = true;
 
-			matchPoint = num1 + num2;
+        while (gameRunning) {
+            gameMenu();
+            int playerInput = scan.nextInt();
 
-			space();
-			matchPoint(); 		
+            switch (playerInput) {
+                case 1:
+                    getMatchPoint();
+                    break;
 
-			keepRolling();
+                case 2:
+                    int[] sums = randomPick();
+                    int mySum = sums[0];
+                    int cpuSum = sums[1];
 
-			userInput = scan.nextInt();
+                    System.out.println(playerName + " rolled: " + mySum);
+                    System.out.println("Cpu rolled: " + cpuSum);
 
-			if (userInput == 1) {
+                    if (mySum == matchPoint && cpuSum != matchPoint) {
+                        playerWins();
+                    } else if (cpuSum == matchPoint && mySum != matchPoint) {
+                        cpuWins();
+                    } else if (mySum == matchPoint && cpuSum == matchPoint) {
+                        tieWin();
+                    } else {
+                        noWinner();
+                    }
 
-			}	
+                    scoreboard();
 
-			if (userInput == 2) {
+                    if (playerScore == 3 || cpuScore == 3) {
+                        gameRunning = false;
+                        System.out.println(playerScore == 3 ? playerName + " wins the game!" : "Cpu wins the game!");
+                    }
+                    break;
 
-				diceOne = random.nextInt(6)+1;
-				diceTwo = random.nextInt(6)+1;
+                case 3:
+                    quitGame();
+                    gameRunning = false;
+                    break;
 
-				mySum = diceOne + diceTwo;
+                default:
+                    System.out.println("Invalid input. Please choose a valid option.");
+            }
+        }
 
-				cpuDiceOne = random.nextInt(6)+1;
-				cpuDiceTwo = random.nextInt(6)+1;
-
-				cpuSum = cpuDiceOne + cpuDiceTwo;
-			}
-
-			System.out.println("\n------------------------------------------");
-			System.out.println(playerName + " rolled ((" + mySum + ")) /=/=/ Cpu rolled ((" + cpuSum + "))");
-			System.out.println("------------------------------------------");
-
-			if (mySum == matchPoint && cpuSum != matchPoint) {
-				userScore++;
-				scoreboard();
-				playerWins();
-				rollAgain();
-				
-				String playerChoice = scan.nextLine();
-				
-				if (playerChoice == "y") {
-				
-			} 
-
-			if (mySum != matchPoint && cpuSum == matchPoint) {
-				cpuScore++;
-				scoreboard();
-				cpuWins();
-				break;
-			}
-
-			if (mySum == matchPoint && cpuSum == matchPoint) {
-				userScore++;
-				cpuScore++;
-				scoreboard();
-				tieWin();
-			} 
-
-			if (mySum != matchPoint && cpuSum != matchPoint) {
-				gameMenu();
-				scoreboard();
-				noWinner();
-			}
-
-
-		}
-
-	}
-
+        scan.close();
+    }
 }
