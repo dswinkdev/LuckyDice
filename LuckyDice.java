@@ -101,15 +101,15 @@ public class LuckyDice {
 
     // random pick
     static int[] randomPick() {
-        int diceOne = random.nextInt(6) + 1;
-        int diceTwo = random.nextInt(6) + 1;
-        int mySum = diceOne + diceTwo;
+        int diceOne = random.nextInt(6) + 1; // Roll player dice 1
+        int diceTwo = random.nextInt(6) + 1; // Roll player dice 2
+        int mySum = diceOne + diceTwo; // Player dice sum
 
-        int cpuDiceOne = random.nextInt(6) + 1;
-        int cpuDiceTwo = random.nextInt(6) + 1;
-        int cpuSum = cpuDiceOne + cpuDiceTwo;
+        int cpuDiceOne = random.nextInt(6) + 1; // Roll CPU dice 1
+        int cpuDiceTwo = random.nextInt(6) + 1; // Roll CPU dice 2
+        int cpuSum = cpuDiceOne + cpuDiceTwo; // CPU dice sum
 
-        return new int[]{mySum, cpuSum};
+        return new int[]{mySum, cpuSum}; // Return both sums
     }
 
     // main
@@ -119,24 +119,24 @@ public class LuckyDice {
         gameIntro();
 
         System.out.print("\nEnter player name: ");
-        playerName = scan.next();
+        playerName = scan.next(); // Get player name
 
         letsPlayTxt();
-        scoreboard();
+        scoreboard(); // Initial scoreboard
 
-        boolean gameRunning = true;
+        boolean gameRunning = true; // Game loop control
 
         while (gameRunning) {
             gameMenu();
-            int playerInput = scan.nextInt();
+            int playerInput = scan.nextInt(); // Get player input
 
             switch (playerInput) {
                 case 1:
-                    getMatchPoint();
+                    getMatchPoint(); // Set match point
                     break;
 
                 case 2:
-                    int[] sums = randomPick();
+                    int[] sums = randomPick(); // Roll dice
                     int mySum = sums[0];
                     int cpuSum = sums[1];
 
@@ -144,33 +144,33 @@ public class LuckyDice {
                     System.out.println("Cpu rolled: " + cpuSum);
 
                     if (mySum == matchPoint && cpuSum != matchPoint) {
-                        playerWins();
+                        playerWins(); // Player wins round
                     } else if (cpuSum == matchPoint && mySum != matchPoint) {
-                        cpuWins();
+                        cpuWins(); // CPU wins round
                     } else if (mySum == matchPoint && cpuSum == matchPoint) {
-                        tieWin();
+                        tieWin(); // Both win round
                     } else {
-                        noWinner();
+                        noWinner(); // No winner this round
                     }
 
-                    scoreboard();
+                    scoreboard(); // Update scoreboard
 
                     if (playerScore == 3 || cpuScore == 3) {
-                        gameRunning = false;
+                        gameRunning = false; // End game if score reaches 3
                         System.out.println(playerScore == 3 ? playerName + " wins the game!" : "Cpu wins the game!");
                     }
                     break;
 
                 case 3:
-                    quitGame();
-                    gameRunning = false;
+                    quitGame(); // Quit game
+                    gameRunning = false; // End game loop
                     break;
 
                 default:
-                    System.out.println("Invalid input. Please choose a valid option.");
+                    System.out.println("Invalid input. Please choose a valid option."); // Handle invalid input
             }
         }
 
-        scan.close();
+        scan.close(); // Close scanner
     }
 }
